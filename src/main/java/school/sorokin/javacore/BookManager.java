@@ -83,14 +83,12 @@ public class BookManager {
         while (true) {
             System.out.print("Choose group :\n" + "1. Family\n2. Work\n3. Friends\n Enter your choice: ");
             String choice = scanner.nextLine().trim();
-            if (choice.equals("1")) {
-                return Group.FAMILY;
-            } else if (choice.equals("2")) {
-                return Group.WORK;
-            } else if (choice.equals("3")) {
-                return Group.FRIENDS;
+            try{
+                return Group.getGroupFromId(choice)
+                        .orElseThrow(() -> new NotFoundException(String.format(INVALID_MESSAGE, nameOfField)));
+            } catch (NotFoundException e) {
+                System.out.println(e.getMessage());
             }
-            System.out.printf(INVALID_MESSAGE, nameOfField);
         }
     }
 
